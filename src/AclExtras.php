@@ -53,13 +53,6 @@ class AclExtras
     public $dataSource = 'default';
 
     /**
-     * Root node name.
-     *
-     * @var string
-     */
-    public $rootNode = 'controllers';
-
-    /**
      * Internal Clean Actions switch
      *
      * @var bool
@@ -159,7 +152,7 @@ class AclExtras
      */
     public function acoUpdate($params = [])
     {
-        $root = $this->_checkNode($this->rootNode, $this->rootNode, null);
+        $root = $this->_checkNode($this->Acl->Aro->getRootNodeName(), $this->Acl->Aro->getRootNodeName(), null);
         if (empty($params['plugin'])) {
             $plugins = Plugin::loaded();
             $this->_processControllers($root);
@@ -209,7 +202,7 @@ class AclExtras
     {
         foreach (array_keys($this->getPrefixes()) as $prefix) {
             $controllers = $this->getControllerList(null, $prefix);
-            $path = $this->rootNode . '/' . $prefix;
+            $path = $this->Acl->Aro->getRootNodeName() . '/' . $prefix;
             $pathNode = $this->_checkNode($path, $prefix, $root->id);
             $this->foundACOs[$root->id][] = $prefix;
             if (isset($this->foundACOs[$pathNode->id])) {
@@ -244,7 +237,7 @@ class AclExtras
             $controllers = $this->getControllerList($plugin);
             $pluginAlias = $this->_pluginAlias($plugin);
             $path = [
-                $this->rootNode,
+                $this->Acl->Aro->getRootNodeName(),
                 $pluginAlias
             ];
             $path = implode('/', Hash::filter($path));
@@ -260,7 +253,7 @@ class AclExtras
             if (isset($this->pluginPrefixes[$plugin])) {
                 foreach (array_keys($this->pluginPrefixes[$plugin]) as $prefix) {
                     $path = [
-                        $this->rootNode,
+                        $this->Acl->Aro->getRootNodeName(),
                         $pluginAlias
                     ];
                     $path = implode('/', Hash::filter($path));
@@ -268,7 +261,7 @@ class AclExtras
                     $this->foundACOs[$root->id][] = $pluginAlias;
 
                     $path = [
-                        $this->rootNode,
+                        $this->Acl->Aro->getRootNodeName(),
                         $pluginAlias,
                         $prefix,
                     ];
@@ -316,7 +309,7 @@ class AclExtras
             }
             $controllersNames[] = $controllerName;
             $path = [
-                $this->rootNode,
+                $this->Acl->Aro->getRootNodeName(),
                 $pluginPath,
                 $prefix,
                 $controllerName
@@ -453,7 +446,7 @@ class AclExtras
                 continue;
             }
             $path = [
-                $this->rootNode,
+                $this->Acl->Aro->getRootNodeName(),
                 $pluginPath,
                 $prefixPath,
                 $controllerName,
