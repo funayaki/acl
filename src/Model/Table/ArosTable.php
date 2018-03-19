@@ -24,6 +24,13 @@ class ArosTable extends AclNodesTable
 {
 
     /**
+     * Root node name.
+     *
+     * @var string
+     */
+    public $rootNode = 'controllers';
+
+    /**
      * {@inheritDoc}
      *
      * @param array $config Config
@@ -46,5 +53,15 @@ class ArosTable extends AclNodesTable
         ]);
 
         $this->setEntityClass(App::className('Acl.Aro', 'Model/Entity'));
+    }
+
+    /**
+     * Get root node name
+     *
+     * @return string
+     */
+    public function getRootNodeName()
+    {
+        return $this->rootNode;
     }
 }
